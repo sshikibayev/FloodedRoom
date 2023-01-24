@@ -14,6 +14,9 @@ public:
 	ARoom();
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool is_water_started{ false };
+
 protected:
 	virtual void BeginPlay() override;
 

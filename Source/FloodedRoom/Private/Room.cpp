@@ -26,5 +26,5 @@ void ARoom::startWaterFlood()
 	}
 
 	GetWorldTimerManager().ClearTimer(water_flood_timer_handle);
-
+	is_water_started = true;
 }
