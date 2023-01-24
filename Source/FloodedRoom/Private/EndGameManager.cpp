@@ -10,14 +10,13 @@ void AEndGameManager::BeginPlay()
 	Super::BeginPlay();
 
 	if (GetWorld()) {
-		GetWorldTimerManager().SetTimer(end_game_timer_handle, this, &AEndGameManager::theGameEnd, game_lenght, true, game_lenght);
+		GetWorldTimerManager().SetTimer(end_game_timer_handle, this, &AEndGameManager::theGameEnd, game_lenght, false, game_lenght);
 	}
 }
 
 void AEndGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AEndGameManager::theGameEnd()
@@ -32,5 +31,7 @@ void AEndGameManager::theGameEnd()
 
 void AEndGameManager::showEndGameUI()
 {
-
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("The end game title is showing"));
+	}
 }
