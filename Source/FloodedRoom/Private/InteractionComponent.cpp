@@ -77,7 +77,6 @@ void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_compo
 
 void UInteractionComponent::OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index)
 {
-	state_manager->setState(StateType::Default);
 	toggleZoneAndOverlap(false);
 }
 
@@ -128,6 +127,5 @@ void UInteractionComponent::startAction()
 
 void UInteractionComponent::endAction()
 {
-	state_manager->setState(StateType::Default);
 	toggleZoneAndOverlap(true);
 }
