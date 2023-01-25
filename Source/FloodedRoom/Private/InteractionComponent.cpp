@@ -18,10 +18,6 @@ void UInteractionComponent::BeginPlay()
 void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	if (is_valve_rotating) {
-		rotateValve(DeltaTime);
-	}
 }
 
 void UInteractionComponent::setupGameStateManager()
@@ -64,7 +60,6 @@ void UInteractionComponent::interact()
 }
 void UInteractionComponent::release()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Released"));
 	endAction();
 }
 
@@ -82,6 +77,7 @@ void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_compo
 
 void UInteractionComponent::OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index)
 {
+	state_manager->setState(StateType::Default);
 	toggleZoneAndOverlap(false);
 }
 
@@ -89,6 +85,13 @@ void UInteractionComponent::toggleZoneAndOverlap(bool toggle)
 {
 	is_player_inside_overlap = toggle;
 	is_player_in_interaction_zone = toggle;
+
+	if (is_player_inside_overlap && is_player_in_interaction_zone) {
+		state_manager->setState(StateType::Overlap);
+	}
+	else {
+		state_manager->setState(StateType::Default);
+	}
 }
 
 bool UInteractionComponent::is_actor_valid(AActor* other_actor)
@@ -114,32 +117,17 @@ bool UInteractionComponent::isTraceCaluclationValid()
 		sphere
 	);
 
-	valve = hit_result.GetActor();
-
 	return is_hit;
-}
-
-void UInteractionComponent::rotateValve(float DeltaTime)
-{
-	if (valve) {
-		FQuat quat_rotation = FQuat(FRotator(0, 0, -valve_rotation_speed * DeltaTime));
-		valve->AddActorLocalRotation(quat_rotation);
-	}
 }
 
 void UInteractionComponent::startAction()
 {
 	is_player_in_interaction_zone = false;
 	state_manager->setState(StateType::Interaction);
-	is_valve_rotating = true;
 }
 
 void UInteractionComponent::endAction()
 {
 	state_manager->setState(StateType::Default);
-	is_valve_rotating = false;
 	toggleZoneAndOverlap(true);
-	if (valve) {
-		valve->SetActorRotation(FRotator::ZeroRotator);
-	}
 }

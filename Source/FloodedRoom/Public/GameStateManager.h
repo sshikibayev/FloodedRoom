@@ -15,8 +15,10 @@ public:
 	AGameStateManager();
 	virtual void Tick(float DeltaTime) override;
 
-	void setState(TEnumAsByte<StateType> state);
+	UFUNCTION(BlueprintCallable)
 	TEnumAsByte<StateType> getState();
+
+	void setState(TEnumAsByte<StateType> state);
 
 protected:
 	virtual void BeginPlay() override;

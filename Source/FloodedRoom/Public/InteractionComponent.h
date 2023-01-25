@@ -38,16 +38,12 @@ private:
 	TArray<AActor*> state_managers;
 	UPROPERTY()
 	AGameStateManager* state_manager;
-	UPROPERTY()
-	AActor* valve;
 
 	UPROPERTY(EditAnywhere)
 	float max_interact_distance{ 300.0f };
 	UPROPERTY(EditAnywhere)
 	float interact_radius{ 60 };
 
-	float valve_rotation_speed{ 100 };
-	bool is_valve_rotating{ false };
 	FName interaction_tag{ "Interaction" };
 	bool is_player_in_interaction_zone{ false };
 	bool is_player_inside_overlap{ false };
@@ -62,7 +58,6 @@ private:
 	void toggleZoneAndOverlap(bool toggle);
 	bool is_actor_valid(AActor* other_actor);
 	bool isTraceCaluclationValid();
-	void rotateValve(float DeltaTime);
 	void startAction();
 	void endAction();
 };
