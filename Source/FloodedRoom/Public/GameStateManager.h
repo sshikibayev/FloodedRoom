@@ -16,6 +16,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void setState(TEnumAsByte<StateType> state);
+	TEnumAsByte<StateType> getState();
 
 protected:
 	virtual void BeginPlay() override;

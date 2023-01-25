@@ -23,6 +23,11 @@ void AGameStateManager::setState(TEnumAsByte<StateType> state)
 	setupCurrentState();
 }
 
+TEnumAsByte<StateType> AGameStateManager::getState()
+{
+	return state_type;
+}
+
 void AGameStateManager::setupCurrentState()
 {
 	switch (state_type)
