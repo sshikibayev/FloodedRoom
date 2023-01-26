@@ -79,10 +79,6 @@ void UInteractionComponent::interact()
 		}
 	}
 }
-void UInteractionComponent::release()
-{
-	endAction();
-}
 
 void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index, bool from_sweep, const FHitResult& hit_result)
 {	
@@ -147,11 +143,4 @@ void UInteractionComponent::startAction()
 	is_player_in_interaction_zone = false;
 	state_manager->setState(StateType::Interaction);
 	end_game_manager->setPlayerWin(true);
-}
-
-void UInteractionComponent::endAction()
-{
-	toggleZoneAndOverlap(true);
-	//state_manager->setState(StateType::EndGame);
-	//end_game_manager->setPlayerWin(false);
 }

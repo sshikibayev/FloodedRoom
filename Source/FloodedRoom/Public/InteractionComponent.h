@@ -24,8 +24,6 @@ public:
 	bool isPlayerInOverlap();
 	UFUNCTION(BlueprintCallable)
 	void interact();
-	UFUNCTION(BlueprintCallable)
-	void release();
 
 protected:
 	virtual void BeginPlay() override;
@@ -61,5 +59,4 @@ private:
 	bool is_actor_valid(AActor* other_actor);
 	bool isTraceCaluclationValid();
 	void startAction();
-	void endAction();
 };
