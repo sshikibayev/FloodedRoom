@@ -12,6 +12,7 @@ void UInteractionComponent::BeginPlay()
 
 	world = GetWorld();
 	setupGameStateManager();
+	setupEndGameManager();
 	setupCollision();
 }
 
@@ -22,6 +23,8 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UInteractionComponent::setupGameStateManager()
 {
+	TArray<AActor*> state_managers;
+
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AGameStateManager::StaticClass(), state_managers);
 
 	if (state_managers.Num() <= 0) {
@@ -33,6 +36,24 @@ void UInteractionComponent::setupGameStateManager()
 	else {
 		for (auto manager : state_managers) {
 			state_manager = Cast<AGameStateManager>(manager);
+		}
+	}
+}
+void UInteractionComponent::setupEndGameManager()
+{
+	TArray<AActor*> end_game_managers;
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEndGameManager::StaticClass(), end_game_managers);
+
+	if (end_game_managers.Num() <= 0) {
+		UE_LOG(LogTemp, Error, TEXT("No end game managers were found"));
+	}
+	else if (end_game_managers.Num() > 1) {
+		UE_LOG(LogTemp, Error, TEXT("More then one end game managers were found"));
+	}
+	else {
+		for (auto manager : end_game_managers) {
+			end_game_manager = Cast<AEndGameManager>(manager);
 		}
 	}
 }
@@ -125,9 +146,12 @@ void UInteractionComponent::startAction()
 {
 	is_player_in_interaction_zone = false;
 	state_manager->setState(StateType::Interaction);
+	end_game_manager->setPlayerWin(true);
 }
 
 void UInteractionComponent::endAction()
 {
 	toggleZoneAndOverlap(true);
+	state_manager->setState(StateType::EndGame);
+	end_game_manager->setPlayerWin(false);
 }

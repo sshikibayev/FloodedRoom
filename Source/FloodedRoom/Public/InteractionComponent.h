@@ -5,6 +5,7 @@
 #include <Kismet/GameplayStatics.h>
 #include <GameStateManager.h>
 #include <Components/BoxComponent.h>
+#include <EndGameManager.h>
 
 #include "InteractionComponent.generated.h"
 
@@ -35,9 +36,9 @@ private:
 	UPROPERTY()
 	UBoxComponent* collision_box;
 	UPROPERTY()
-	TArray<AActor*> state_managers;
-	UPROPERTY()
 	AGameStateManager* state_manager;
+	UPROPERTY()
+	AEndGameManager* end_game_manager;
 
 	UPROPERTY(EditAnywhere)
 	float max_interact_distance{ 300.0f };
@@ -54,6 +55,7 @@ private:
 	void OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index);
 
 	void setupGameStateManager();
+	void setupEndGameManager();
 	void setupCollision();
 	void toggleZoneAndOverlap(bool toggle);
 	bool is_actor_valid(AActor* other_actor);
