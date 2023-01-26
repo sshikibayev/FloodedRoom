@@ -34,9 +34,9 @@ private:
 	UPROPERTY()
 	UCameraComponent* camera;
 
+	void setupComponents(APawn* pawn);
 	void disablePlayerInput();
 	void enablePlayerInput();
-
 	void setupCurrentState();
 	void setupDefaultState();
 	void setupOverllapState();

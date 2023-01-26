@@ -10,8 +10,10 @@ void AGameStateManager::BeginPlay()
 	Super::BeginPlay();
 
 	auto player_pawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	camera = player_pawn->FindComponentByClass<UCameraComponent>();
-	move_comp = player_pawn->FindComponentByClass<UCharacterMovementComponent>();
+	if (player_pawn) {
+		setupComponents(player_pawn);
+	}
+	
 
 	setState(StateType::Default);
 }
@@ -31,6 +33,12 @@ TEnumAsByte<StateType> AGameStateManager::getState()
 {
 	return state_type;
 }
+
+void AGameStateManager::setupComponents(APawn* pawn) {
+	camera = pawn->FindComponentByClass<UCameraComponent>();
+	move_comp = pawn->FindComponentByClass<UCharacterMovementComponent>();
+}
+
 
 void AGameStateManager::disablePlayerInput()
 {
@@ -77,32 +85,20 @@ void AGameStateManager::setupCurrentState()
 
 void AGameStateManager::setupDefaultState()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Default state"));
-	}
 	enablePlayerInput();
 }
 
 void AGameStateManager::setupOverllapState()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Overlap state"));
-	}
 	enablePlayerInput();
 }
 
 void AGameStateManager::setupInteractionState()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Interaction state"));
-	}
 	disablePlayerInput();
 }
 
 void AGameStateManager::setupEndGameState()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("EndGame state"));
-	}
 	disablePlayerInput();
 }
