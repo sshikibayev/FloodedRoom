@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include <GameStateManager.h>
+#include "GameStateManager.h"
 
 #include "Valve.generated.h"
 

@@ -5,7 +5,6 @@ AValve::AValve()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
 void AValve::BeginPlay()
 {
 	Super::BeginPlay();

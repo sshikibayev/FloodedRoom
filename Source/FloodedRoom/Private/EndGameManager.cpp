@@ -19,6 +19,11 @@ void AEndGameManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+bool AEndGameManager::getPlayerWin()
+{
+	return is_player_win_condition;
+}
+
 void AEndGameManager::setPlayerWin(bool is_player_win)
 {
 	is_player_win_condition = is_player_win;
@@ -28,25 +33,9 @@ void AEndGameManager::setPlayerWin(bool is_player_win)
 	}
 }
 
-bool AEndGameManager::getPlayerWin()
-{
-	return is_player_win_condition;
-}
-
 void AEndGameManager::theGameEnd()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("The game has end"));
-	}
-
 	GetWorldTimerManager().ClearTimer(end_game_timer_handle);
 	game_state->setState(StateType::EndGame);
-	showEndGameUI();
-}
-
-void AEndGameManager::showEndGameUI()
-{
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("The end game title is showing"));
-	}
+	setPlayerWin(false);
 }

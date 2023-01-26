@@ -21,10 +21,6 @@ void ARoom::Tick(float DeltaTime)
 
 void ARoom::startWaterFlood()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 4.0f, FColor::Cyan, TEXT("Water started to flood"));
-	}
-
 	GetWorldTimerManager().ClearTimer(water_flood_timer_handle);
 	is_water_started = true;
 }

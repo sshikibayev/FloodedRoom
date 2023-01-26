@@ -18,6 +18,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AGameStateManager* game_state;
+
 	UPROPERTY(BlueprintReadWrite)
 	FString win_or_lose_text {"You Win!" };
 
@@ -39,5 +40,4 @@ private:
 	bool is_player_win_condition{ true };
 
 	void theGameEnd();
-	void showEndGameUI();
 };
