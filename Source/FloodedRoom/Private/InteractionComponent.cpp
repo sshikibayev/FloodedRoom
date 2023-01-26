@@ -152,6 +152,6 @@ void UInteractionComponent::startAction()
 void UInteractionComponent::endAction()
 {
 	toggleZoneAndOverlap(true);
-	state_manager->setState(StateType::EndGame);
-	end_game_manager->setPlayerWin(false);
+	//state_manager->setState(StateType::EndGame);
+	//end_game_manager->setPlayerWin(false);
 }
