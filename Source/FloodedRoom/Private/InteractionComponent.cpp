@@ -21,6 +21,39 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
+bool UInteractionComponent::isPlayerInOverlap()
+{
+	return is_player_in_interaction_zone;
+}
+
+void UInteractionComponent::interact()
+{
+	if (world) {
+		if (isTraceCaluclationValid()) {
+			startAction();
+		}
+	}
+}
+
+void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index, bool from_sweep, const FHitResult& hit_result)
+{
+	if (is_actor_valid(other_actor)) {
+		if (!is_player_inside_overlap) {
+			toggleZoneAndOverlap(true);
+		}
+	}
+	else {
+		is_player_in_interaction_zone = false;
+	}
+}
+
+void UInteractionComponent::OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index)
+{
+	if (is_player_in_interaction_zone) {
+		toggleZoneAndOverlap(false);
+	}
+}
+
 void UInteractionComponent::setupGameStateManager()
 {
 	TArray<AActor*> state_managers;
@@ -39,6 +72,7 @@ void UInteractionComponent::setupGameStateManager()
 		}
 	}
 }
+
 void UInteractionComponent::setupEndGameManager()
 {
 	TArray<AActor*> end_game_managers;
@@ -57,6 +91,7 @@ void UInteractionComponent::setupEndGameManager()
 		}
 	}
 }
+
 void UInteractionComponent::setupCollision()
 {
 	collision_box = GetOwner()->FindComponentByClass<UBoxComponent>();
@@ -65,37 +100,6 @@ void UInteractionComponent::setupCollision()
 
 		collision_box->OnComponentBeginOverlap.AddDynamic(this, &UInteractionComponent::OnBeginOverlap);
 		collision_box->OnComponentEndOverlap.AddDynamic(this, &UInteractionComponent::OnEndOverlap);
-	}
-}
-bool UInteractionComponent::isPlayerInOverlap()
-{	
-	return is_player_in_interaction_zone;
-}
-void UInteractionComponent::interact()
-{
-	if (world) {
-		if (isTraceCaluclationValid()) {
-			startAction();
-		}
-	}
-}
-
-void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index, bool from_sweep, const FHitResult& hit_result)
-{	
-	if (is_actor_valid(other_actor)) {
-		if (!is_player_inside_overlap) {
-			toggleZoneAndOverlap(true);
-		}
-	}
-	else {
-		is_player_in_interaction_zone = false;
-	}
-}
-
-void UInteractionComponent::OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index)
-{
-	if (is_player_in_interaction_zone) {
-		toggleZoneAndOverlap(false);
 	}
 }
 

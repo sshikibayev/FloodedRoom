@@ -5,7 +5,7 @@
 #include <Kismet/GameplayStatics.h>
 #include <GameStateManager.h>
 #include <Components/BoxComponent.h>
-#include <EndGameManager.h>
+#include "EndGameManager.h"
 
 #include "InteractionComponent.generated.h"
 
