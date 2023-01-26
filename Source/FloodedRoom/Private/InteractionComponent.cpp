@@ -77,7 +77,9 @@ void UInteractionComponent::OnBeginOverlap(UPrimitiveComponent* overlapped_compo
 
 void UInteractionComponent::OnEndOverlap(UPrimitiveComponent* overlapped_component, AActor* other_actor, UPrimitiveComponent* other_component, int32 body_index)
 {
-	toggleZoneAndOverlap(false);
+	if (is_player_in_interaction_zone) {
+		toggleZoneAndOverlap(false);
+	}
 }
 
 void UInteractionComponent::toggleZoneAndOverlap(bool toggle)
